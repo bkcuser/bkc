@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🤬বোকাচোদা 🤬</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow: hidden;
+      transition: background 0.5s ease;
+    }
+
+    /* শুরুর 2x2 পিক্সেল ব্যাকগ্রাউন্ড */
+    .pixel-bg {
+      background-image:
+        linear-gradient(45deg, #000 25%, transparent 25%),
+        linear-gradient(-45deg, #000 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #000 75%),
+        linear-gradient(-45deg, transparent 75%, #000 75%);
+      background-size: 2px 2px;
+      background-position: 0 0, 0 1px, 1px -1px, -1px 0px;
+      background-color: #fff;
+    }
+
+    /* বোতামে ক্লিকের পর গাঢ় কালো থেকে হালকা কালো গ্রেডিয়েন্ট */
+    .dark-gradient-bg {
+      background: linear-gradient(to bottom, #111111, #222222);
+    }
+
+    .top-image {
+      width: 100%;
+      height: 420px;
+      background-image: url('khera.jpeg');
+      background-size: cover;
+      background-position: center top;
+      margin-bottom: 30px;
+      border-radius: 0 0 25px 25px;
+      display: none;
+      opacity: 0;
+      animation: fadeInImage 1.5s ease forwards;
+    }
+
+    @keyframes fadeInImage {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #reveal-btn {
+      background-color: #000;
+      color: #fff;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 2s ease;
+      margin-top: 20px;
+      z-index: 3;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .birthday-card {
+      display: none;
+      max-width: 600px;
+      text-align: center;
+      padding: 40px;
+      background: #fff;
+      border-radius: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      font-size: 18px;
+      color: #333;
+      white-space: pre-wrap;
+      z-index: 2;
+    }
+
+    .flying-emoji {
+      position: absolute;
+      bottom: -100px;
+      font-size: 80px;
+      animation: floatUp 8s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120vh);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-image {
+        height: 280px;
+      }
+
+      .birthday-card {
+        padding: 20px;
+        font-size: 16px;
+        width: 90%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #reveal-btn {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
+
+      .birthday-card {
+        font-size: 14px;
+        padding: 15px;
+      }
+
+      .top-image {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body class="pixel-bg">
+  <div class="top-image" id="topImage"></div>
+
+  <button id="reveal-btn">🖕এএএ ইয়েনে চাপ  দে চুদনা🖕</button>
+
+  <div class="birthday-card" id="birthday-card">
+    <h1>😁বাস্সীর মাগীইএনে আসলি কেন খেড়া শুনতে ?</h1>
+    <div class="typing" id="message"></div>
+  </div>
+
+  <audio id="bg-audio" src="audio.mp3" loop></audio>
+
+  <script>
+    // ডান-ক্লিক নিষিদ্ধ
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    // কীবোর্ড শর্টকাট (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U) নিষিদ্ধ
+    document.addEventListener('keydown', function(e) {
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) ||
+        (e.ctrlKey && e.key === "U")
+      ) {
+        e.preventDefault();
+      }
+    });
+
+    const revealBtn = document.getElementById("reveal-btn");
+    const card = document.getElementById("birthday-card");
+    const typingDiv = document.getElementById("message");
+    const topImage = document.getElementById("topImage");
+    const audio = document.getElementById("bg-audio");
+    const body = document.body;
+
+    revealBtn.addEventListener("click", () => {
+      // পিক্সেল ব্যাকগ্রাউন্ড -> ডার্ক গ্রেডিয়েন্ট ব্যাকগ্রাউন্ড
+      body.classList.remove("pixel-bg");
+      body.classList.add("dark-gradient-bg");
+
+      // অডিও চালাও
+      audio.play().catch(e => {
+        console.log("Audio play blocked:", e);
+      });
+
+      // কনটেন্ট দেখাও
+      revealBtn.style.display = "none";
+      topImage.style.display = "block";
+      card.style.display = "block";
+      createFlyingEmojis();
+      startTypingArticle();
+    });
+
+    const articleText = `🤬🤬বোকাচোদা 🤬মাদারচোদ রেন্ডির মাগি 🤬🤬
+🤬তোর সাহস কি করে হলো 🤬আমার বানানো ওয়েব সাইট এ আসার? 🤬
+বেশি কি আর 🤬কও তোর মাগি রী! 
+বের হো🤬 আগে🤬 আমার ওয়েব সাইট থেকে!
+আর🤬 কোনদিন যেন 🤬ঢুকিস না, নাহলে কিন্তু..🤬🤬🤬🤬.`;
+
+    let index = 0;
+    let displayedText = '';
+    function startTypingArticle() {
+      if (index < articleText.length) {
+        displayedText += articleText.charAt(index);
+        typingDiv.innerText = displayedText;
+        index++;
+        setTimeout(startTypingArticle, 40);
+      }
+    }
+
+    function createFlyingEmojis() {
+      const emojiCount = 20;
+      for (let i = 0; i < emojiCount; i++) {
+        const emoji = document.createElement('div');
+        emoji.classList.add('flying-emoji');
+        emoji.innerText = '🤬';
+        emoji.style.left = Math.random() * 100 + 'vw';
+        emoji.style.animationDuration = (Math.random() * 4 + 5) + 's';
+        emoji.style.fontSize = (Math.random() * 40 + 60) + 'px';
+        emoji.style.animationDelay = (Math.random() * 5) + 's';
+        document.body.appendChild(emoji);
+      }
+    }
+  </script>
+</body>
+</html>
